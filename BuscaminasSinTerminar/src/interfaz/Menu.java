@@ -10,8 +10,10 @@
 
 package interfaz;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import modelo.Buscaminas;
+import modelo.errorValor;
 
 public class Menu {
 	
@@ -60,7 +62,7 @@ public class Menu {
 		boolean salir = false;
 
 		while (!salir) {
-
+			try {
 			mostrarTablero();
 			int valorUsuario = menuJuego();
 
@@ -68,7 +70,7 @@ public class Menu {
 			case 1:
 				//Abrir una casilla
 				if(!abrirCasilla()){
-					System.out.println("La casilla ya estaba abierta o es incorrecta!");
+					throw new errorValor("Invalido");
 				}
 				
 				if (juego.darPerdio()) {
@@ -81,7 +83,6 @@ public class Menu {
 					System.out.println("Felicitaciones Ganaste!!!!!!!");
 				}
 				break;
-
 			case 2:
 				//Dar Pista
 				System.out.println(juego.darPista());
@@ -102,9 +103,17 @@ public class Menu {
 				break;
 
 			default:
-				System.out.println("Por favor digite una opción valida");
-				break;
+				throw new errorValor("");
 			}
+			
+		}catch(InputMismatchException e) {
+			System.out.println(e.getClass() + "Por favor digite una opcion valida");
+			lector.nextLine();
+			
+		} catch (errorValor e) {
+			
+			System.out.println(e.getMessage() + "La casilla ya estaba abierta o es incorrecta!");
+		}
 
 
 		}
@@ -121,26 +130,32 @@ public class Menu {
 	 * Metodo encargado de abrir las casillas
 	 * @return boolean, true si fue posible abrir la casilla, false en caso contrario
 	 */
-	public boolean abrirCasilla() {
-
+	public boolean abrirCasilla()throws errorValor {
+		
 		boolean abrir = false;
+		
 		System.out.println("Por favor digite el número de la fila que desea abrir");
 		int i = lector.nextInt();
 		i--;
 		lector.nextLine();		
 
+		
+		
 		System.out.println("Por favor digite el número de la columna que desea abrir");
 		int j = lector.nextInt();
 		j--;
 		lector.nextLine();		
-
+		try {
 		if(i>=0 && i<juego.darCasillas().length && j>=0 && j<juego.darCasillas()[0].length){
 			abrir = juego.abrirCasilla(i,j);			
 		}else {
-			System.out.println("Digitaste valores incorrectos");
+		     throw new errorValor("Error en validacion");
 		}
-
+	}catch(errorValor e) {
+		System.out.println("Digite un valor valido");
+	}
 		return abrir;
+		
 	}
 
 
@@ -149,6 +164,7 @@ public class Menu {
 	 * @return int - la seleccion del usuario
 	 */
 	public int menuJuego(){
+	
 		System.out.println("Que deseas hacer ?");
 		System.out.println("1. Abrir una casilla ");
 		System.out.println("2. Dar pista ");
@@ -158,7 +174,9 @@ public class Menu {
 		int valor = lector.nextInt();
 		lector.nextLine();			
 		return valor;
+
 	}
+
 
 	/**
 	 * Metodo que se encarga de Mostrar el tablero en consola
@@ -187,20 +205,24 @@ public class Menu {
 
 		int seleccion = -1;
 
+		
 		while (seleccion<1 || seleccion>3) {
-
-			System.out.println("Por favor elija el nivel de dificultad: ");
+			try {
+			System.out.println("Por favor elija el nivel de dificultad: "); 
 			System.out.println("1. Principiante ");
 			System.out.println("2. Intermedio ");
 			System.out.println("3. Experto ");
 			
 			seleccion = lector.nextInt();
 			lector.nextLine();
-
-			if(seleccion<1 || seleccion>3){
-				System.out.println("Por favor ingrese un valor correcto");
-			}
+		}catch(InputMismatchException e) {
+			
+			System.out.println("Por favor digite un valor valido");
+			lector.nextLine();
 		}
+		
+	}
+
 
 		return seleccion;
 	}
@@ -220,7 +242,7 @@ public class Menu {
 		mensaje += "********************** Universidad Icesi  ************************\n";
 		mensaje += "******************************************************************\n";
 
-		mensaje += mostrarBannerSeparacion();
+		mensaje += mostrarBannerSeparacion(); 
 
 		System.out.println(mensaje);
 	}
