@@ -14,6 +14,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import modelo.Buscaminas;
 import modelo.errorValor;
+import modelo.valorNivelErrado;
 
 public class Menu {
 	
@@ -215,7 +216,11 @@ public class Menu {
 			
 			seleccion = lector.nextInt();
 			lector.nextLine();
-		}catch(InputMismatchException e) {
+			if(seleccion<1 || seleccion>3) {
+				throw new valorNivelErrado("Nivel Equivocado");
+			}
+			
+		}catch(valorNivelErrado e) {
 			
 			System.out.println("Por favor digite un valor valido");
 			lector.nextLine();
