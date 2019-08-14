@@ -215,7 +215,10 @@ public class Menu {
 			
 			seleccion = lector.nextInt();
 			lector.nextLine();
-		}catch(InputMismatchException e) {
+			if(seleccion<1 || seleccion>3) {
+				throw new valorNivelErrado("nivel no disponible");
+			}
+		}catch(valorNivelErrado e) {
 			
 			System.out.println("Por favor digite un valor valido");
 			lector.nextLine();
