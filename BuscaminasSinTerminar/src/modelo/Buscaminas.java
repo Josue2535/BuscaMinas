@@ -385,14 +385,14 @@ public class Buscaminas {
 							ya = true;
 						}
 
-						ms += "la casilla [" + (i + 1) + "," + (j + 1) + "] se destapo \n";
+						ms += "" + (i) + "," + (j) + "";
 					}
 				}
 			}
 		}
-//		if (ms.equals("")) {
-//			ms += "no hay pistas";
-//		}
+		if (ms.equals("")) {
+			ms += "no hay pistas";
+		}
 		return ms;
 	}
 
