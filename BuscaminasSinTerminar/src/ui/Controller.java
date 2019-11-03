@@ -37,14 +37,12 @@ public class Controller {
 	public void createLevel( int i, int j) {
 		Pane root = new Pane();
 		VBox vbox = new VBox();
-		Font f = new Font(16);
 		gp = new GridPane();
 		HBox gp1 = new HBox();
 		for (int k = 0; k < i; k++) {
 			for (int k2 = 0; k2 < j; k2++) {
 				Button b1 = new Button(bu.darCasillas()[k][k2].mostrarValorCasilla());
 				b1.setId(k+","+k2);
-				b1.setFont(f);
 				b1.setOnAction(e->{destapar(b1);});
 				gp.add(b1, k2, k);;
 			}
@@ -78,6 +76,7 @@ public class Controller {
 		int j = Integer.parseInt(parts[1]);
 		bu.abrirCasilla(i,j);
 		b1.setText(bu.darCasillas()[i][j].mostrarValorCasilla());
+		b1.setOnAction(e->{});
 		if(bu.darPerdio()) {
 			JOptionPane.showMessageDialog(null, "Perdiste");
 			solucionar();
@@ -85,16 +84,16 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "ganaste");
 			solucionar();
 		}
+		
 	}
 	
 	public void solucionar() {
 		bu.resolver();
 		gp.getChildren().clear();
-		Font f = new Font(16);		
 		for (int i = 0; i < bu.darCasillas().length; i++) {
 			for (int j = 0; j < bu.darCasillas()[0].length; j++) {
 				Button b1 = new Button(bu.darCasillas()[i][j].mostrarValorCasilla());
-				b1.setFont(f);
+				
 				gp.add(b1, j, i);
 			}
 		}
@@ -106,7 +105,9 @@ public class Controller {
 			for (int j = 0; j < bu.darCasillas()[0].length; j++) {
 				Button b1 = new Button(bu.darCasillas()[i][j].mostrarValorCasilla());
 				b1.setId(i+","+j);
+				if(!bu.darCasillas()[i][j].darSeleccionada()) {
 				b1.setOnAction(e->{destapar(b1);});
+				}
 				gp.add(b1, j, i);
 			}
 		}

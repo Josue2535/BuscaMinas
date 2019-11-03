@@ -13,10 +13,11 @@ import javafx.scene.text.Font;
 
 
 public class Main extends Application {
-	private Controller c1 = new Controller();
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Controller c1 = new Controller();
 			VBox root = new VBox();
 			Button b1 = new Button("PRINCIPIANTE");
 			Button b2 = new Button("INTERMEDIO");
