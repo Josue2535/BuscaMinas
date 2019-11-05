@@ -45,6 +45,8 @@ public class Casilla {
 	 * Atributo que indica la cantidad de minas que tiene alrededor una casilla.
 	 */
 	private int valor;
+	
+	private boolean seCreeMina;
 
 	 // -----------------------------------------------------------------
     // Constructores
@@ -58,6 +60,7 @@ public class Casilla {
 		this.tipo = tipo;
 		seleccionada = false;
 		valor = -1;
+		seCreeMina = false;
 	}
 	
 
@@ -87,11 +90,15 @@ public class Casilla {
 	 */
 	public String mostrarValorCasilla(){
 		String valor = "";
-		
-		if(!seleccionada){
-			valor = "-";
+		 if(!seleccionada){
+			if(seCreeMina) {
+				valor = " ?";
+			} else {
+				valor = " -";
+			}
+			
 		}else if(esMina()) {
-			valor = "*";
+			valor = " *";
 		}else {
 			valor = this.valor+"";
 		}
@@ -104,6 +111,7 @@ public class Casilla {
 	 */
 	public void destapar(){
 		seleccionada = true;
+		seCreeMina = false;
 	}
 	
 	/**
@@ -120,6 +128,15 @@ public class Casilla {
 	 */
 	public int darValor(){
 		return valor;
+	}
+	public void creeMina() {
+		seCreeMina = true;
+	}
+	public void yaNoSeCreeMina() {
+		seCreeMina = false;
+	}
+	public boolean darSeCreeMina() {
+		return seCreeMina;
 	}
 	
 	
